@@ -49,6 +49,7 @@ button {
     border-radius: 4px;
 }
 
+/* Si paso el mouse por encima, cambia de color */
 button:hover {
     background-color: #45a049;
 }

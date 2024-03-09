@@ -1,3 +1,5 @@
+//Utilizar estructura de objetos DOM
+
 document.addEventListener('DOMContentLoaded', function () {
   loadTasks();
 });
@@ -18,10 +20,11 @@ function addTask() {
   }
 }
 
+// con esta función, llamo una ventana emergente para editar un código //
 function editTask(button) {
   let taskToEdit = button.parentNode;
   let span = taskToEdit.querySelector('span');
-  let newText = prompt('Editar tarea:', span.textContent);
+  let newText = prompt('Editar código:', span.textContent);
 
   if (newText !== null) {
       span.textContent = newText;
