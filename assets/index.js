@@ -34,21 +34,69 @@ function removeTask(button) {
   let taskToRemove = button.parentNode;
   taskList.removeChild(taskToRemove);
 
-  deleteTask(taskToRemove.textContent);
+  deleteTask(taskToRemove.querySelector('span').textContent);
+}
+
+// Persistencia de datos con window.localStore
+
+function createTaskElement(taskText) {
+  let li = document.createElement('li');
+  let span = document.createElement('span');
+  span.textContent = taskText;
+  let editButton = document.createElement('button');
+  editButton.textContent = 'Editar';
+  editButton.onclick = function () {
+      editTask(this);
+  };
+  let deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Eliminar';
+  deleteButton.onclick = function () {
+      removeTask(this);
+  };
+
+  li.appendChild(span);
+  li.appendChild(editButton);
+  li.appendChild(deleteButton);
+
+  return li;
 }
 
 function saveTask(task) {
-  // Implementar la lógica para guardar la tarea (puede usar localStorage o una API, según sus necesidades).
+  let tasks = getStoredTasks();
+  tasks.push(task);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function deleteTask(task) {
-  // Implementar la lógica para eliminar la tarea (puede usar localStorage o una API, según sus necesidades).
+  let tasks = getStoredTasks();
+  let index = tasks.indexOf(task);
+  if (index !== -1) {
+      tasks.splice(index, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 }
 
 function updateTask(taskElement, newText) {
-  // Implementar la lógica para actualizar la tarea (puede usar localStorage o una API, según sus necesidades).
+  let tasks = getStoredTasks();
+  let oldText = taskElement.querySelector('span').textContent;
+  let index = tasks.indexOf(oldText);
+  if (index !== -1) {
+      tasks[index] = newText;
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 }
 
 function loadTasks() {
-  // Implementar la lógica para cargar las tareas almacenadas (puede usar localStorage o una API, según sus necesidades).
+  let tasks = getStoredTasks();
+  let taskList = document.getElementById('task-list');
+
+  tasks.forEach(function (taskText) {
+    let li = createTaskElement(taskText);
+      taskList.appendChild(li);
+  });
+}
+
+function getStoredTasks() {
+  let storedTasks = localStorage.getItem('tasks');
+  return storedTasks ? JSON.parse(storedTasks) : [];
 }
