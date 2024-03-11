@@ -21,7 +21,7 @@ Este es un proyecto CRUD simple para el ingreso de materiales, creado por Iván 
 
 ## Licencia
 
-Este proyecto está bajo la licencia [MIT](LICENSE).
+Este proyecto está bajo la licencia [IEOO](LICENSE).
 
 ---
 
